@@ -1,0 +1,15 @@
+{
+  "name": "pegjs-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pegjs": "github:pegjs/pegjs#v0.8.0",
+    "php-pegjs": "^0.8.7"
+  }
+}

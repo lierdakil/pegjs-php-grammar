@@ -1,0 +1,35 @@
+// Simple Arithmetics Grammar
+// ==========================
+//
+// Accepts expressions like "2 * (3 + 4)" and computes their value.
+
+Expression
+  = head:Term tail:(_ ("+" / "-") _ Term)* {
+      return array_reduce($tail, function($result, $element) {
+        if ($element[1] === "+") { return $result + $element[3]; }
+        if ($element[1] === "-") { return $result - $element[3]; }
+      }, $head);
+    }
+
+Term
+  = head:Factor tail:(_ ("*" / "/") _ Factor)* {
+      return array_reduce($tail, function($result, $element) {
+        if ($element[1] === "*") { return $result * $element[3]; }
+        if ($element[1] === "/") { return $result / $element[3]; }
+      }, $head);
+    }
+
+Factor
+  = "(" _ expr:Expression _ ")" { return $expr; }
+  / Function
+  / Integer
+
+Function
+  = _ "sqrt(" int:Integer ")" { return sqrt($int); }
+
+Integer "integer"
+  = _ val:([0-9]+) { return floatval(implode($val)); }
+
+_ "whitespace"
+  = [ \t\n\r]*
+
