@@ -22,13 +22,21 @@ Term
 Factor
   = "(" _ expr:Expression _ ")" { return $expr; }
   / Function
-  / Integer
+  / Number
 
 Function
-  = _ "sqrt(" int:Integer ")" { return sqrt($int); }
+  = _ "sqrt(" int:Number ")" { return sqrt($int); }
+  / _ "if(" cond:Condition _ "," _ iftrue:Expression _ "," _ iffalse:Expression _ ")" { return $cond ? $iftrue : $iffalse; }
 
-Integer "integer"
-  = _ val:([0-9]+) { return floatval(implode($val)); }
+Condition
+  = _ a:Expression _ "=" _ b:Expression { return $a == $b; }
+  / _ "in(" a:Expression _ arr:ConditionArg* ")" { return in_array($a, $arr); }
+
+ConditionArg
+  = "," _ val:Expression _ { return $val; }
+
+Number "number"
+  = _ [+-]?[0-9]+( "." [0-9]+)?([eE][+-]?[0-9]+)? { return floatval($this->text()); }
 
 _ "whitespace"
   = [ \t\n\r]*
