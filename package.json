@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "pegjs": "github:pegjs/pegjs#v0.8.0",
-    "php-pegjs": "^0.8.7"
+    "php-pegjs": "github:lierdakil/php-pegjs#master"
   }
 }

@@ -43,7 +43,7 @@ Variable
   = _ "$" name:VariableName { return $this->vars[$name]; }
 
 VariableName
-  = _ val:[a-zA-Z0-9]+ { return implode($val); }
+  = _ [a-zA-Z] [a-zA-Z0-9]+ { return $this->text(); }
 
 _ "whitespace"
   = [ \t\n\r]*
