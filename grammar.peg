@@ -23,6 +23,7 @@ Factor
   = "(" _ expr:Expression _ ")" { return $expr; }
   / Function
   / Number
+  / Variable
 
 Function
   = _ "sqrt(" int:Number ")" { return sqrt($int); }
@@ -37,6 +38,12 @@ ConditionArg
 
 Number "number"
   = _ [+-]?[0-9]+( "." [0-9]+)?([eE][+-]?[0-9]+)? { return floatval($this->text()); }
+
+Variable
+  = _ "$" name:VariableName { return $this->vars[$name]; }
+
+VariableName
+  = _ val:[a-zA-Z0-9]+ { return implode($val); }
 
 _ "whitespace"
   = [ \t\n\r]*
